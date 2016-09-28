@@ -96,97 +96,8 @@ data = fread(&#39;conversion_data.csv&#39;,header = T,stringsAsFactors = T)
 kable(data[1:10,], format = &quot;markdown&quot;,row.names = FALSE)
 </code></pre>
 
-<table><thead>
-<tr>
-<th align="left">country</th>
-<th align="right">age</th>
-<th align="right">new_user</th>
-<th align="left">source</th>
-<th align="right">total_pages_visited</th>
-<th align="right">converted</th>
-</tr>
-</thead><tbody>
-<tr>
-<td align="left">UK</td>
-<td align="right">25</td>
-<td align="right">1</td>
-<td align="left">Ads</td>
-<td align="right">1</td>
-<td align="right">0</td>
-</tr>
-<tr>
-<td align="left">US</td>
-<td align="right">23</td>
-<td align="right">1</td>
-<td align="left">Seo</td>
-<td align="right">5</td>
-<td align="right">0</td>
-</tr>
-<tr>
-<td align="left">US</td>
-<td align="right">28</td>
-<td align="right">1</td>
-<td align="left">Seo</td>
-<td align="right">4</td>
-<td align="right">0</td>
-</tr>
-<tr>
-<td align="left">China</td>
-<td align="right">39</td>
-<td align="right">1</td>
-<td align="left">Seo</td>
-<td align="right">5</td>
-<td align="right">0</td>
-</tr>
-<tr>
-<td align="left">US</td>
-<td align="right">30</td>
-<td align="right">1</td>
-<td align="left">Seo</td>
-<td align="right">6</td>
-<td align="right">0</td>
-</tr>
-<tr>
-<td align="left">US</td>
-<td align="right">31</td>
-<td align="right">0</td>
-<td align="left">Seo</td>
-<td align="right">1</td>
-<td align="right">0</td>
-</tr>
-<tr>
-<td align="left">China</td>
-<td align="right">27</td>
-<td align="right">1</td>
-<td align="left">Seo</td>
-<td align="right">4</td>
-<td align="right">0</td>
-</tr>
-<tr>
-<td align="left">US</td>
-<td align="right">23</td>
-<td align="right">0</td>
-<td align="left">Ads</td>
-<td align="right">4</td>
-<td align="right">0</td>
-</tr>
-<tr>
-<td align="left">UK</td>
-<td align="right">29</td>
-<td align="right">0</td>
-<td align="left">Direct</td>
-<td align="right">4</td>
-<td align="right">0</td>
-</tr>
-<tr>
-<td align="left">US</td>
-<td align="right">25</td>
-<td align="right">0</td>
-<td align="left">Ads</td>
-<td align="right">2</td>
-<td align="right">0</td>
-</tr>
-</tbody></table>
+<pre><code>## Error in eval(expr, envir, enclos): could not find function &quot;kable&quot;
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
@@ -200,72 +111,8 @@ kable(data[1:10,], format = &quot;markdown&quot;,row.names = FALSE)
     <pre><code class="r">kable(summary(data))
 </code></pre>
 
-<table><thead>
-<tr>
-<th align="left"></th>
-<th align="left">country</th>
-<th align="left">age</th>
-<th align="left">new_user</th>
-<th align="left">source</th>
-<th align="left">total_pages_visited</th>
-<th align="left">converted</th>
-</tr>
-</thead><tbody>
-<tr>
-<td align="left"></td>
-<td align="left">China  : 76602</td>
-<td align="left">Min.   : 17.00</td>
-<td align="left">0: 99456</td>
-<td align="left">Ads   : 88740</td>
-<td align="left">Min.   : 1.000</td>
-<td align="left">0:306000</td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="left">Germany: 13056</td>
-<td align="left">1st Qu.: 24.00</td>
-<td align="left">1:216744</td>
-<td align="left">Direct: 72420</td>
-<td align="left">1st Qu.: 2.000</td>
-<td align="left">1: 10200</td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="left">UK     : 48450</td>
-<td align="left">Median : 30.00</td>
-<td align="left">NA</td>
-<td align="left">Seo   :155040</td>
-<td align="left">Median : 4.000</td>
-<td align="left">NA</td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="left">US     :178092</td>
-<td align="left">Mean   : 30.57</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">Mean   : 4.873</td>
-<td align="left">NA</td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="left">NA</td>
-<td align="left">3rd Qu.: 36.00</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">3rd Qu.: 7.000</td>
-<td align="left">NA</td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="left">NA</td>
-<td align="left">Max.   :123.00</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">Max.   :29.000</td>
-<td align="left">NA</td>
-</tr>
-</tbody></table>
+<pre><code>## Error in eval(expr, envir, enclos): could not find function &quot;kable&quot;
+</code></pre>
 
 <ol>
 <li>seems a U.S. site</li>
@@ -286,7 +133,7 @@ kable(data[1:10,], format = &quot;markdown&quot;,row.names = FALSE)
     <pre><code class="r">data %&gt;% ggplot(aes(x=age)) + geom_histogram(binwidth=5)
 </code></pre>
 
-<p><img src="figure/unnamed-chunk-6-1.png" alt="plot of chunk unnamed-chunk-6"></p>
+<p><img src="assets/fig/unnamed-chunk-6-1.png" alt="plot of chunk unnamed-chunk-6"></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -307,33 +154,8 @@ kable(data[1:10,], format = &quot;markdown&quot;,row.names = FALSE)
 <pre><code class="r">kable(subset(data, age&gt;100))
 </code></pre>
 
-<table><thead>
-<tr>
-<th align="left">country</th>
-<th align="right">age</th>
-<th align="right">new_user</th>
-<th align="left">source</th>
-<th align="right">total_pages_visited</th>
-<th align="right">converted</th>
-</tr>
-</thead><tbody>
-<tr>
-<td align="left">Germany</td>
-<td align="right">123</td>
-<td align="right">0</td>
-<td align="left">Seo</td>
-<td align="right">15</td>
-<td align="right">1</td>
-</tr>
-<tr>
-<td align="left">UK</td>
-<td align="right">111</td>
-<td align="right">0</td>
-<td align="left">Ads</td>
-<td align="right">10</td>
-<td align="right">1</td>
-</tr>
-</tbody></table>
+<pre><code>## Error in eval(expr, envir, enclos): could not find function &quot;kable&quot;
+</code></pre>
 
 <p>Seems these 2 obervations (of 316200) are just unrealistic on the age dimension,
 Thus, we could <br>
@@ -363,7 +185,7 @@ Thus, we could <br>
   ggplot(aes(x=country,y=conversion_rate,fill=country))+geom_bar(stat=&#39;identity&#39;)
 </code></pre>
 
-<p><img src="figure/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" width="480px" /></p>
+<p><img src="assets/fig/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" width="480px" /></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -378,7 +200,7 @@ Thus, we could <br>
   ggplot(aes(x=total_pages_visited,y=conversion_rate))+geom_line(stat=&#39;identity&#39;)
 </code></pre>
 
-<p><img src="figure/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" width="480px" /></p>
+<p><img src="assets/fig/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" width="480px" /></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -394,7 +216,7 @@ data %&gt;% group_by(new_user) %&gt;% summarise(conversion_rate = mean(converted
   ggplot(aes(x=new_user,y=conversion_rate,fill=new_user))+geom_bar(stat=&#39;identity&#39;)
 </code></pre>
 
-<p><img src="figure/unnamed-chunk-10-1.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" width="350px" /></p>
+<p><img src="assets/fig/unnamed-chunk-10-1.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" width="350px" /></p>
 
 <ul>
 <li>users with older accounts have high conversion rate</li>
@@ -413,7 +235,7 @@ data %&gt;% group_by(new_user) %&gt;% summarise(conversion_rate = mean(converted
   ggplot(aes(x=source,y=conversion_rate,fill=source))+geom_bar(stat=&#39;identity&#39;)
 </code></pre>
 
-<p><img src="figure/unnamed-chunk-11-1.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" width="350px" /></p>
+<p><img src="assets/fig/unnamed-chunk-11-1.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" width="350px" /></p>
 
 <ul>
 <li>users with older accounts have high conversion rate</li>
@@ -451,7 +273,7 @@ data %&gt;% group_by(new_user) %&gt;% summarise(conversion_rate = mean(converted
   ggplot(aes(x=country,y=conversion_rate,fill=source))+geom_bar(stat=&#39;identity&#39;,position=position_dodge())
 </code></pre>
 
-<p><img src="figure/unnamed-chunk-13-1.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" width="350px" /></p>
+<p><img src="assets/fig/unnamed-chunk-13-1.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" width="350px" /></p>
 
 <ul>
 <li>China is the much different from others</li>
@@ -544,7 +366,7 @@ data %&gt;% group_by(new_user) %&gt;% summarise(conversion_rate = mean(converted
   ggplot(aes(x=age,fill=factor(converted)))+geom_histogram(binwidth = 5,alpha=.5, position=&quot;identity&quot;) + facet_wrap(~source+country,scales = &quot;free&quot;)
 </code></pre>
 
-<p><img src="figure/unnamed-chunk-18-1.png" title="plot of chunk unnamed-chunk-18" alt="plot of chunk unnamed-chunk-18" width="480px" /></p>
+<p><img src="assets/fig/unnamed-chunk-18-1.png" title="plot of chunk unnamed-chunk-18" alt="plot of chunk unnamed-chunk-18" width="480px" /></p>
 
   </article>
   <!-- Presenter Notes -->

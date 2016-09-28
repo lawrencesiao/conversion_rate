@@ -42,20 +42,9 @@ data = fread('conversion_data.csv',header = T,stringsAsFactors = T)
 kable(data[1:10,], format = "markdown",row.names = FALSE)
 ```
 
-
-
-|country | age| new_user|source | total_pages_visited| converted|
-|:-------|---:|--------:|:------|-------------------:|---------:|
-|UK      |  25|        1|Ads    |                   1|         0|
-|US      |  23|        1|Seo    |                   5|         0|
-|US      |  28|        1|Seo    |                   4|         0|
-|China   |  39|        1|Seo    |                   5|         0|
-|US      |  30|        1|Seo    |                   6|         0|
-|US      |  31|        0|Seo    |                   1|         0|
-|China   |  27|        1|Seo    |                   4|         0|
-|US      |  23|        0|Ads    |                   4|         0|
-|UK      |  29|        0|Direct |                   4|         0|
-|US      |  25|        0|Ads    |                   2|         0|
+```
+## Error in eval(expr, envir, enclos): could not find function "kable"
+```
 
 ---
 ## Data
@@ -66,16 +55,9 @@ kable(data[1:10,], format = "markdown",row.names = FALSE)
 kable(summary(data))
 ```
 
-
-
-|   |   country     |     age       |new_user |   source     |total_pages_visited |converted |
-|:--|:--------------|:--------------|:--------|:-------------|:-------------------|:---------|
-|   |China  : 76602 |Min.   : 17.00 |0: 99456 |Ads   : 88740 |Min.   : 1.000      |0:306000  |
-|   |Germany: 13056 |1st Qu.: 24.00 |1:216744 |Direct: 72420 |1st Qu.: 2.000      |1: 10200  |
-|   |UK     : 48450 |Median : 30.00 |NA       |Seo   :155040 |Median : 4.000      |NA        |
-|   |US     :178092 |Mean   : 30.57 |NA       |NA            |Mean   : 4.873      |NA        |
-|   |NA             |3rd Qu.: 36.00 |NA       |NA            |3rd Qu.: 7.000      |NA        |
-|   |NA             |Max.   :123.00 |NA       |NA            |Max.   :29.000      |NA        |
+```
+## Error in eval(expr, envir, enclos): could not find function "kable"
+```
 
 1. seems a U.S. site
 2. Max age 123 seems does not make sense
@@ -91,7 +73,7 @@ So, let's dig in the distribution of age
 data %>% ggplot(aes(x=age)) + geom_histogram(binwidth=5)
 ```
 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png)
+![plot of chunk unnamed-chunk-6](assets/fig/unnamed-chunk-6-1.png)
 
 ---
 
@@ -110,12 +92,9 @@ sort(data$age,decreasing = T)[1:20]
 kable(subset(data, age>100))
 ```
 
-
-
-|country | age| new_user|source | total_pages_visited| converted|
-|:-------|---:|--------:|:------|-------------------:|---------:|
-|Germany | 123|        0|Seo    |                  15|         1|
-|UK      | 111|        0|Ads    |                  10|         1|
+```
+## Error in eval(expr, envir, enclos): could not find function "kable"
+```
 
 Seems these 2 obervations (of 316200) are just unrealistic on the age dimension,
 Thus, we could <br>
@@ -135,7 +114,7 @@ data %>% group_by(country) %>% summarise(conversion_rate = mean(converted)) %>%
   ggplot(aes(x=country,y=conversion_rate,fill=country))+geom_bar(stat='identity')
 ```
 
-<img src="figure/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" width="480px" />
+<img src="assets/fig/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" width="480px" />
 
 ---
 ## EDA - total_pages_visited
@@ -145,7 +124,7 @@ data %>% group_by(total_pages_visited) %>% summarise(conversion_rate = mean(conv
   ggplot(aes(x=total_pages_visited,y=conversion_rate))+geom_line(stat='identity')
 ```
 
-<img src="figure/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" width="480px" />
+<img src="assets/fig/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" width="480px" />
 
 ---
 ## EDA - new_user
@@ -156,7 +135,7 @@ data %>% group_by(new_user) %>% summarise(conversion_rate = mean(converted)) %>%
   ggplot(aes(x=new_user,y=conversion_rate,fill=new_user))+geom_bar(stat='identity')
 ```
 
-<img src="figure/unnamed-chunk-10-1.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" width="350px" />
+<img src="assets/fig/unnamed-chunk-10-1.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" width="350px" />
 * users with older accounts have high conversion rate
 
 ---
@@ -167,7 +146,7 @@ data %>% group_by(source) %>% summarise(conversion_rate = mean(converted)) %>%
   ggplot(aes(x=source,y=conversion_rate,fill=source))+geom_bar(stat='identity')
 ```
 
-<img src="figure/unnamed-chunk-11-1.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" width="350px" />
+<img src="assets/fig/unnamed-chunk-11-1.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" width="350px" />
 * users with older accounts have high conversion rate
 
 ---
@@ -190,7 +169,7 @@ data %>% group_by(country,source) %>% summarise(conversion_rate = mean(converted
   ggplot(aes(x=country,y=conversion_rate,fill=source))+geom_bar(stat='identity',position=position_dodge())
 ```
 
-<img src="figure/unnamed-chunk-13-1.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" width="350px" />
+<img src="assets/fig/unnamed-chunk-13-1.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" width="350px" />
 * China is the much different from others
 
 ---
@@ -241,7 +220,7 @@ data %>%
   ggplot(aes(x=age,fill=factor(converted)))+geom_histogram(binwidth = 5,alpha=.5, position="identity") + facet_wrap(~source+country,scales = "free")
 ```
 
-<img src="figure/unnamed-chunk-18-1.png" title="plot of chunk unnamed-chunk-18" alt="plot of chunk unnamed-chunk-18" width="480px" />
+<img src="assets/fig/unnamed-chunk-18-1.png" title="plot of chunk unnamed-chunk-18" alt="plot of chunk unnamed-chunk-18" width="480px" />
 
 --- .dark .segue
 
