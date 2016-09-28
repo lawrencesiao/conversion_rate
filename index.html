@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Data Mining in the Application of E-Commerce Website</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Data Mining in the Application of E-Commerce Website">
+  <meta name="author" content="Lawrence Siao">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Data Mining in the Application of E-Commerce Website</h1>
+    <h2>Conversion Rate Prediction</h2>
+    <p>Lawrence Siao<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Outline</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li>Problem Statement &amp; Data</li>
+<li>Exploratory Data Analysis</li>
+<li>Machine Learning </li>
+<li>Summary</li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="dark segue" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Problem Statement &amp; Data</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Problem Statement</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>about users who hit our site: whether they converted or not as well as some of their characteristics such as:<br></p>
+
+<ul>
+<li>their country - country <br></li>
+<li>the marketing channel - source <br></li>
+<li>their age - age </li>
+<li>whether they are repeat users - new_user</li>
+<li>the number of pages visited during that session - total_pages_visited <br><br></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Data</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">require(data.table)
+data = fread(&#39;conversion_data.csv&#39;,header = T,stringsAsFactors = T)
+kable(data[1:10,], format = &quot;markdown&quot;,row.names = FALSE)
+</code></pre>
+
+<table><thead>
+<tr>
+<th align="left">country</th>
+<th align="right">age</th>
+<th align="right">new_user</th>
+<th align="left">source</th>
+<th align="right">total_pages_visited</th>
+<th align="right">converted</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left">UK</td>
+<td align="right">25</td>
+<td align="right">1</td>
+<td align="left">Ads</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">US</td>
+<td align="right">23</td>
+<td align="right">1</td>
+<td align="left">Seo</td>
+<td align="right">5</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">US</td>
+<td align="right">28</td>
+<td align="right">1</td>
+<td align="left">Seo</td>
+<td align="right">4</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">China</td>
+<td align="right">39</td>
+<td align="right">1</td>
+<td align="left">Seo</td>
+<td align="right">5</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">US</td>
+<td align="right">30</td>
+<td align="right">1</td>
+<td align="left">Seo</td>
+<td align="right">6</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">US</td>
+<td align="right">31</td>
+<td align="right">0</td>
+<td align="left">Seo</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">China</td>
+<td align="right">27</td>
+<td align="right">1</td>
+<td align="left">Seo</td>
+<td align="right">4</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">US</td>
+<td align="right">23</td>
+<td align="right">0</td>
+<td align="left">Ads</td>
+<td align="right">4</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">UK</td>
+<td align="right">29</td>
+<td align="right">0</td>
+<td align="left">Direct</td>
+<td align="right">4</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">US</td>
+<td align="right">25</td>
+<td align="right">0</td>
+<td align="left">Ads</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+</tbody></table>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Data</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">kable(summary(data))
+</code></pre>
+
+<table><thead>
+<tr>
+<th align="left"></th>
+<th align="left">country</th>
+<th align="left">age</th>
+<th align="left">new_user</th>
+<th align="left">source</th>
+<th align="left">total_pages_visited</th>
+<th align="left">converted</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left"></td>
+<td align="left">China  : 76602</td>
+<td align="left">Min.   : 17.00</td>
+<td align="left">0: 99456</td>
+<td align="left">Ads   : 88740</td>
+<td align="left">Min.   : 1.000</td>
+<td align="left">0:306000</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">Germany: 13056</td>
+<td align="left">1st Qu.: 24.00</td>
+<td align="left">1:216744</td>
+<td align="left">Direct: 72420</td>
+<td align="left">1st Qu.: 2.000</td>
+<td align="left">1: 10200</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">UK     : 48450</td>
+<td align="left">Median : 30.00</td>
+<td align="left">NA</td>
+<td align="left">Seo   :155040</td>
+<td align="left">Median : 4.000</td>
+<td align="left">NA</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">US     :178092</td>
+<td align="left">Mean   : 30.57</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Mean   : 4.873</td>
+<td align="left">NA</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">3rd Qu.: 36.00</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">3rd Qu.: 7.000</td>
+<td align="left">NA</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">Max.   :123.00</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Max.   :29.000</td>
+<td align="left">NA</td>
+</tr>
+</tbody></table>
+
+<ol>
+<li>seems a U.S. site</li>
+<li>Max age 123 seems does not make sense</li>
+</ol>
+
+<p>So, let&#39;s dig in the distribution of age</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Distribution of Age</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">data %&gt;% ggplot(aes(x=age)) + geom_histogram(binwidth=5)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-6-1.png" alt="plot of chunk unnamed-chunk-6"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Distribution of Age</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">sort(data$age,decreasing = T)[1:20]
+</code></pre>
+
+<pre><code>##  [1] 123 111  79  77  73  72  70  70  69  69  69  68  68  68  68  68  67
+## [18]  67  67  67
+</code></pre>
+
+<pre><code class="r">kable(subset(data, age&gt;100))
+</code></pre>
+
+<table><thead>
+<tr>
+<th align="left">country</th>
+<th align="right">age</th>
+<th align="right">new_user</th>
+<th align="left">source</th>
+<th align="right">total_pages_visited</th>
+<th align="right">converted</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left">Germany</td>
+<td align="right">123</td>
+<td align="right">0</td>
+<td align="left">Seo</td>
+<td align="right">15</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="left">UK</td>
+<td align="right">111</td>
+<td align="right">0</td>
+<td align="left">Ads</td>
+<td align="right">10</td>
+<td align="right">1</td>
+</tr>
+</tbody></table>
+
+<p>Seems these 2 obervations (of 316200) are just unrealistic on the age dimension,
+Thus, we could <br>
+1. try to figure out whether there is a bug in the data collection mechanism<br>
+2. just remove these two from the data set (althought it might not cause changes to the result ) <br></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="dark segue" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Exploratory Data Analysis</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>EDA - country</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">data %&gt;% group_by(country) %&gt;% summarise(conversion_rate = mean(converted)) %&gt;% 
+  ggplot(aes(x=country,y=conversion_rate,fill=country))+geom_bar(stat=&#39;identity&#39;)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" width="480px" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>EDA - total_pages_visited</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">data %&gt;% group_by(total_pages_visited) %&gt;% summarise(conversion_rate = mean(converted)) %&gt;% 
+  ggplot(aes(x=total_pages_visited,y=conversion_rate))+geom_line(stat=&#39;identity&#39;)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" width="480px" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>EDA - new_user</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">data$new_user = data$new_user %&gt;% as.factor(.)
+data %&gt;% group_by(new_user) %&gt;% summarise(conversion_rate = mean(converted)) %&gt;% 
+  ggplot(aes(x=new_user,y=conversion_rate,fill=new_user))+geom_bar(stat=&#39;identity&#39;)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-10-1.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" width="350px" /></p>
+
+<ul>
+<li>users with older accounts have high conversion rate</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>EDA - source</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">data %&gt;% group_by(source) %&gt;% summarise(conversion_rate = mean(converted)) %&gt;% 
+  ggplot(aes(x=source,y=conversion_rate,fill=source))+geom_bar(stat=&#39;identity&#39;)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-11-1.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" width="350px" /></p>
+
+<ul>
+<li>users with older accounts have high conversion rate</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>EDA - source</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">t.test(data[source==&#39;Ads&#39;,converted],data[source==&#39;Seo&#39;,converted])$p.value
+</code></pre>
+
+<pre><code>## [1] 0.03711654
+</code></pre>
+
+<ul>
+<li>The difference between source is significant</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>EDA - source, country</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">data %&gt;% group_by(country,source) %&gt;% summarise(conversion_rate = mean(converted)) %&gt;% 
+  ggplot(aes(x=country,y=conversion_rate,fill=source))+geom_bar(stat=&#39;identity&#39;,position=position_dodge())
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-13-1.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" width="350px" /></p>
+
+<ul>
+<li>China is the much different from others</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>EDA - age</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">data %&gt;% ggplot(aes(x=age,fill=factor(converted))) + 
+  geom_histogram(binwidth = 5,alpha=.5, position=&quot;identity&quot;)
+</code></pre>
+
+<p><img src="./image/eda_age.png" style="height:350px;"> <br></p>
+
+<ul>
+<li>the age distribution of those who do not convert is symmetric, but thosewho converted is right-skewed</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>EDA - age vs. country</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">data %&gt;% ggplot(aes(x=age,fill=factor(converted))) + geom_histogram(binwidth = 5,alpha=.5, position=&quot;identity&quot;) + facet_wrap(~country,scales = &quot;free&quot;)
+</code></pre>
+
+<p><img src="./image/eda_age_country.png" style="height:400px;"> <br></p>
+
+<ul>
+<li>Those users from China seldom converted</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>EDA - age vs. source</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">data %&gt;% ggplot(aes(x=age,fill=factor(converted)))+ geom_histogram(binwidth = 5,alpha=.5, position=&quot;identity&quot;) + facet_wrap(~source,scales = &quot;free&quot;)
+</code></pre>
+
+<p><img src="./image/eda_age_source.png" style="height:350px;"> <br></p>
+
+<ul>
+<li>no significant difference among sources</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>EDA - age vs. new_user</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">data %&gt;% 
+  ggplot(aes(x=age,fill=factor(converted)))+geom_histogram(binwidth = 5,alpha=.5, position=&quot;identity&quot;) + facet_wrap(~new_user,scales = &quot;free&quot;)
+</code></pre>
+
+<p><img src="./image/eda_age_newuser.png" style="height:350px;"> <br></p>
+
+<ul>
+<li>no significant difference among sources</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>EDA - age, source , country</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">data %&gt;% 
+  ggplot(aes(x=age,fill=factor(converted)))+geom_histogram(binwidth = 5,alpha=.5, position=&quot;identity&quot;) + facet_wrap(~source+country,scales = &quot;free&quot;)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-18-1.png" title="plot of chunk unnamed-chunk-18" alt="plot of chunk unnamed-chunk-18" width="480px" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="dark segue" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>Machine Learning</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Machine Learning</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">require(randomForest)
+set.seed(9999)
+data$converted = as.factor(data$converted) 
+data$new_user = as.factor(data$new_user)
+# split it into training/testing sets
+train_sample = sample(nrow(data), size = nrow(data)*0.66)
+train_data = data[train_sample,]
+test_data = data[-train_sample,]
+rf = randomForest(y=train_data$converted, x = train_data[, -ncol(train_data),with=FALSE],
+  ytest = test_data$converted, xtest = test_data[, -ncol(test_data),with=FALSE],
+  ntree = 100, mtry = 3, keep.forest = TRUE)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>Machine Learning</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">rf
+</code></pre>
+
+<p><img src="./image/rf.png" style="height:300px;"></p>
+
+<ol>
+<li>OOB and test error is similar, 1.43% vs. 1.49% <br></li>
+<li>1.49% &lt; 3.2% (if we classified everything as non converted) <br>
+Let&#39;s the importance of each feature <br></li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>Feature Selection</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">varImpPlot(rf,type=2)
+</code></pre>
+
+<p><img src="./image/rf_importance1.png" style="height:300px;"></p>
+
+<ul>
+<li>The most important is total_pages_visited, which is not helpful</li>
+<li>People who want to purchase will also need to visit more</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-24" style="background:;">
+  <hgroup>
+    <h2>Feature Selection</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>remove &#39;total_pages_visited&#39; and try again</p>
+
+<pre><code class="r">rf = randomForest(y=train_data$converted, x = train_data[, -c(5, ncol(train_data)),with=FALSE],
+  ytest = test_data$converted, xtest = test_data[, -c(5, ncol(train_data)),with=FALSE],
+          ntree = 100, mtry = 3, keep.forest = TRUE,classwt = c(0.7,0.3))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
+  <hgroup>
+    <h2>Feature Selection</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">varImpPlot(rf,type=2)
+</code></pre>
+
+<p><img src="./image/rf_importance2.png" style="height:300px;"></p>
+
+<ul>
+<li>New user is the most important feature</li>
+<li>Source is less important</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-26" style="background:;">
+  <hgroup>
+    <h2>Partial Dependence Plot</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">op &lt;- par(mfrow=c(2, 2))
+ partialPlot(rf, train_data, country, 1)
+ partialPlot(rf, train_data, age, 1)
+ partialPlot(rf, train_data, new_user, 1)
+ partialPlot(rf, train_data, source, 1)
+</code></pre>
+
+<p><img src="./image/partialplot.png" style="height:400px;"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-27" style="background:;">
+  <hgroup>
+    <h2>Feature Selection</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="./image/partialplot.png" style="height:400px;">
+<br>
+Insights: <br>
+1.Users with an old account are much better than new users <br> 
+2.China is really bad, all other countries are similar with Germany being the best <br>
+3.The site works very well for young people and bad for less young people <br>
+4.Source is irrelevant <br></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-28" style="background:;">
+  <hgroup>
+    <h2>Machine Learning</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Use a simple decision tree to see the first few segments</p>
+
+<pre><code class="r">require(rpart)
+(tree = rpart(data$converted ~ ., data[, -c(5,ncol(data))],
+              control = rpart.control(maxdepth = 3),
+      parms = list(prior = c(0.7, 0.3))))
+</code></pre>
+
+<p><img src="./image/cart.png" style="height:300px;"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-29" style="background:;">
+  <hgroup>
+    <h2>Machine Learning</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="./image/cart.png" style="height:300px;">
+<br>
+Implications:<br>
+1. new_user is the first rule <br>
+2. wether from China or not is the second rule <br>
+2. 29.5 years old is a threshold for age <br></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="dark segue" id="slide-30" style="background:;">
+  <hgroup>
+    <h2>Summary</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-31" style="background:;">
+  <hgroup>
+    <h2>Summary</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>The site is working very well for young users, so we could tell marketing to advertise and use marketing channel which are more likely to reach young people. <br></p></li>
+<li><p>The conversion for Germany is high, but now the users from Germany is low, less than UK. However, the population in Germany is greater than UK. So, there is great opportunity at Germany.<br></p></li>
+<li><p>Those with old accounts perform better at conversion rate. So maybe send them EDM to bring them back to our website will be a good idea. <br></p></li>
+<li><p>The conversion rate for older users is relatively low. So the UX for older people might not friendly enough. <br></p></li>
+<li><p>The conversion rate at China is terriblely low, it is probably either poorly translated,
+or maybe it&#39;s totally in English. So it&#39;s very important to modify the UX for Chinese, the numbers of user from China is very amazing.</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-32" style="background:;">
+  <article data-timings="">
+    <p><img src="./image/QA.png" style="height:400px;text-align:center;"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Outline'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Problem Statement &amp; Data'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Problem Statement'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Data'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Data'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Distribution of Age'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Distribution of Age'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Exploratory Data Analysis'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='EDA - country'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='EDA - total_pages_visited'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='EDA - new_user'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='EDA - source'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='EDA - source'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='EDA - source, country'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='EDA - age'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='EDA - age vs. country'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='EDA - age vs. source'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='EDA - age vs. new_user'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='EDA - age, source , country'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='Machine Learning'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Machine Learning'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='Machine Learning'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='Feature Selection'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='Feature Selection'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='Feature Selection'>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='Partial Dependence Plot'>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title='Feature Selection'>
+         27
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=28 title='Machine Learning'>
+         28
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=29 title='Machine Learning'>
+         29
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=30 title='Summary'>
+         30
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=31 title='Summary'>
+         31
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=32 title='NA'>
+         32
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
